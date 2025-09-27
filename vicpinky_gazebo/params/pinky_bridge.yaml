@@ -1,3 +1,33 @@
+# ----------------- RGBD Camera Bridge (수정된 버전) -----------------
+# 1. 컬러 이미지 (RGB Image)
+- gz_topic_name: "/astra/image"
+  ros_topic_name: "astra/image_raw"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# 2. 뎁스 이미지 (Depth Image)
+- gz_topic_name: "/astra/depth_image"
+  ros_topic_name: "astra/depth/image_raw"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# 3. 포인트 클라우드 (Point Cloud)
+- gz_topic_name: "/astra/points"
+  ros_topic_name: "astra/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+# 4. 카메라 정보 (Camera Info)
+- gz_topic_name: "/astra/camera_info"
+  ros_topic_name: "astra/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+# --- 나머지 브릿지 설정 (기존과 동일) ---
 - ros_topic_name: "clock"
   gz_topic_name: "clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
@@ -14,12 +44,6 @@
   gz_topic_name: "scan"
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"
-  direction: GZ_TO_ROS
-
-- ros_topic_name: "camera/camera_info"
-  gz_topic_name: "camera/camera_info"
-  ros_type_name: "sensor_msgs/msg/CameraInfo"
-  gz_type_name: "gz.msgs.CameraInfo"
   direction: GZ_TO_ROS
 
 - ros_topic_name: "cmd_vel"
@@ -39,4 +63,3 @@
   ros_type_name: "nav_msgs/msg/Odometry"
   gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
-

@@ -27,5 +27,11 @@
 
     <node pkg="ros_gz_bridge" exec="parameter_bridge" name='parameter_bridge' output='screen' args="--ros-args -p config_file:=$(var bridge_params)"/>
     <node pkg="ros_gz_image" exec="image_bridge" name='image_bridge' output='screen' args="/camera/image_raw"/>
-    <node pkg="ros_gz_image" exec="image_bridge" name='image_bridge' output='screen' args="/camera"/>
+    <node pkg="ros_gz_image" exec="image_bridge" name='image_bridge_2' output='screen' args="/camera"/>
+
+    <!-- Static transform for RGBD camera frame issue workaround -->
+    <node pkg="tf2_ros" exec="static_transform_publisher"
+          name="camera_frame_fix"
+          args="0 0 0 0 0 0 camera_link pinky/base_footprint/camera"/>
+
 </launch>
