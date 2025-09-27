@@ -243,7 +243,6 @@
         <xacro:inertial_box mass="0.03" x="0.07" y="0.07" z="0.07">
             <origin xyz="0 0 -0.035" rpy="0 0 0"/>
         </xacro:inertial_box>
-
     </link>
 
     <joint name="${prefix}lidar_mount_fixed_joint" type="fixed">
@@ -253,11 +252,43 @@
     </joint>
 
     <link name="${prefix}laser_link"/>
-
+    
     <joint name="${prefix}laser_link_fixed_joint" type="fixed">
         <parent link="${prefix}lidar_mount"/>
         <child link="${prefix}laser_link"/>
         <origin xyz="0.0 0 0.03" rpy="0 0 ${pi}"/>
+    </joint>
+
+    <link name="${prefix}camera_mount">
+      <visual>
+        <geometry>
+          <mesh filename="package://vicpinky_description/meshes/visual/orbbec_astra_camera.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.06 0.17 0.048"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.22" />
+        <inertia ixx="0.000513" ixy="0.0" ixz="0.0" iyy="0.000086" iyz="0.0" izz="0.0005"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}camera_mount_fixed_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}camera_mount"/>
+      <origin xyz="0.07 0 0.56" rpy="0 0 0"/>
+    </joint>
+
+
+    <link name="${prefix}camera_link"/>
+
+    <joint name="${prefix}camera_link_fixed_joint" type="fixed">
+      <parent link="${prefix}camera_mount"/>
+      <child link="${prefix}camera_link"/>
+      <origin xyz="0.015 0.015 0.008" rpy="0 0 0"/>
     </joint>
 
 </robot>
