@@ -1,7 +1,7 @@
 <?xml version='1.0' ?>
 
 <launch>
-    <arg name="use_sim_time" default="False"/>
+    <arg name="use_sim_time" default="True"/>
     <arg name="filter_yaml_path" default="$(find-pkg-share vicpinky_bringup)/config/laser_filter.yaml" />
 
     <include file="$(find-pkg-share vicpinky_gazebo)/launch/launch_sim.launch.xml">

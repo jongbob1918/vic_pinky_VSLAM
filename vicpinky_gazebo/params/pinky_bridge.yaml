@@ -1,28 +1,28 @@
 # ----------------- RGBD Camera Bridge (수정된 버전) -----------------
 # 1. 컬러 이미지 (RGB Image)
-- gz_topic_name: "/astra/image"
-  ros_topic_name: "astra/image_raw"
+- gz_topic_name: "/depth_camera/image"
+  ros_topic_name: "depth_camera/image_raw"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS
 
 # 2. 뎁스 이미지 (Depth Image)
-- gz_topic_name: "/astra/depth_image"
-  ros_topic_name: "astra/depth/image_raw"
+- gz_topic_name: "/depth_camera/depth_image"
+  ros_topic_name: "depth_camera/depth/image_raw"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS
 
 # 3. 포인트 클라우드 (Point Cloud)
-- gz_topic_name: "/astra/points"
-  ros_topic_name: "astra/points"
+- gz_topic_name: "/depth_camera/points"
+  ros_topic_name: "depth_camera/points"
   ros_type_name: "sensor_msgs/msg/PointCloud2"
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
 
 # 4. 카메라 정보 (Camera Info)
-- gz_topic_name: "/astra/camera_info"
-  ros_topic_name: "astra/camera_info"
+- gz_topic_name: "/depth_camera/camera_info"
+  ros_topic_name: "depth_camera/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   gz_type_name: "gz.msgs.CameraInfo"
   direction: GZ_TO_ROS
