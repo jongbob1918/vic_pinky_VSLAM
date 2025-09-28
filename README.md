@@ -1,5 +1,7 @@
 # vic_pinky
-<img src="/doc/image.png" width="40%" height="30%" title="vicpinky" alt="vicpinky"></img>
+<img src="./doc/gazebo_image.png" width="50%" height="50%"></img>
+
+<img src="./doc/rviz_depth_image.png" width="50%" height="50%"></img>
 
 # PC 설정
 ## 환경
