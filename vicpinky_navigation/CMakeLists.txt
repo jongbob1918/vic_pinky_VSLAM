@@ -24,7 +24,9 @@ if(BUILD_TESTING)
 endif()
 
 find_package(slam_toolbox REQUIRED)
-
+find_package(rtabmap_slam REQUIRED)
+find_package(rtabmap_viz REQUIRED)
+find_package(rtabmap_ros REQUIRED)
 install(
   DIRECTORY launch map params rviz
   DESTINATION share/${PROJECT_NAME}

@@ -3,13 +3,20 @@
 <launch>
     <arg name="use_sim_time" default="True"/>
     <arg name="filter_yaml_path" default="$(find-pkg-share vicpinky_bringup)/config/laser_filter.yaml" />
+    <arg name="ekf_yaml_path" default="$(find-pkg-share vicpinky_bringup)/config/ekf.yaml" />
 
     <include file="$(find-pkg-share vicpinky_gazebo)/launch/launch_sim.launch.xml">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     
+    <node pkg="robot_localization" exec="ekf_node" name="ekf_filter_node" output="screen">
+        <param from="$(var ekf_yaml_path)" />
+        <param name="use_sim_time" value="$(var use_sim_time)" />
+    </node>
+
     <node pkg="laser_filters" exec="scan_to_scan_filter_chain">
         <param from="$(var filter_yaml_path)" />
+        <param name="use_sim_time" value="$(var use_sim_time)" />
     </node>
 
 </launch>

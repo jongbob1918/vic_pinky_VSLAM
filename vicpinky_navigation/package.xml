@@ -12,6 +12,10 @@
   <depend>slam_toolbox</depend>
   <depend>navigation2</depend>
   <depend>nav2_bringup</depend>
+  <depend>rtabmap_slam</depend>
+  <depend>rtabmap_viz</depend>
+  <depend>rtabmap_ros</depend>
+
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

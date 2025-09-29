@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="use_sim_time" default="false"/>
+  <arg name="localization" default="false"/>
+  
+  <!-- RTAB-Map SLAM Node (Mapping mode) -->
+  <node pkg="rtabmap_slam" exec="rtabmap" name="rtabmap" output="screen"
+        unless="$(var localization)">
+    <!-- Basic parameters -->
+    <param name="frame_id" value="base_footprint"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="subscribe_depth" value="true"/>
+    <param name="use_action_for_goal" value="true"/>
+    
+    <!-- 2D SLAM parameters -->
+    <param name="Reg/Force3DoF" value="true" type="str"/>
+    <param name="Optimizer/GravitySigma" value="0" type="str"/>
+    
+    <!-- Grid map parameters -->
+    <param name="Grid/RayTracing" value="true" type="str"/>
+    <param name="Grid/3D" value="false" type="str"/>
+    <param name="Grid/RangeMax" value="3" type="str"/>
+    <param name="Grid/NormalsSegmentation" value="false" type="str"/>
+    <param name="Grid/MaxGroundHeight" value="0.05" type="str"/>
+    <param name="Grid/MaxObstacleHeight" value="0.4" type="str"/>
+    
+    <!-- Topic remapping -->
+    <remap from="rgb/image" to="/camera/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera/camera_info"/>
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="odom" to="/odom"/>
+    
+    <!-- Delete database on start -->
+    <param name="delete_db_on_start" value="true"/>
+    <param name="Grid/Published" value="true" type="str"/>
+    <param name="publish_tf" value="true"/>
+  </node>
+  
+  <!-- RTAB-Map Localization mode -->
+  <node pkg="rtabmap_slam" exec="rtabmap" name="rtabmap" output="screen"
+        if="$(var localization)">
+    <param name="frame_id" value="base_footprint"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="subscribe_depth" value="true"/>
+    <param name="use_action_for_goal" value="true"/>
+    
+    <param name="Reg/Force3DoF" value="true" type="str"/>
+    <param name="Optimizer/GravitySigma" value="0" type="str"/>
+    <param name="Grid/RayTracing" value="true" type="str"/>
+    <param name="Grid/3D" value="false" type="str"/>
+    <param name="Grid/RangeMax" value="3" type="str"/>
+    <param name="Grid/NormalsSegmentation" value="false" type="str"/>
+    <param name="Grid/MaxGroundHeight" value="0.05" type="str"/>
+    <param name="Grid/MaxObstacleHeight" value="0.4" type="str"/>
+    
+    <!-- Localization mode parameters -->
+    <param name="Mem/IncrementalMemory" value="false" type="str"/>
+    <param name="Mem/InitWMWithAllNodes" value="true" type="str"/>
+    
+    <remap from="rgb/image" to="/camera/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera/camera_info"/>
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="odom" to="/odom"/>
+    
+    <param name="Grid/Published" value="true" type="str"/>
+    <param name="publish_tf" value="true"/>
+  </node>
+  
+  <!-- RTAB-Map Visualization -->
+  <node pkg="rtabmap_viz" exec="rtabmap_viz" name="rtabmap_viz" output="screen">
+    <param name="frame_id" value="base_footprint"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="subscribe_depth" value="true"/>
+    <param name="use_action_for_goal" value="true"/>
+    
+    <remap from="rgb/image" to="/camera/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera/camera_info"/>
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="odom" to="/odom"/>
+  </node>
+  
+  <!-- Obstacle detection for Nav2 -->
+  <node pkg="rtabmap_util" exec="point_cloud_xyz" name="point_cloud_xyz" output="screen">
+    <param name="decimation" value="2"/>
+    <param name="max_depth" value="3.0"/>
+    <param name="voxel_size" value="0.02"/>
+    
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="depth/camera_info" to="/camera/camera_info"/>
+    <remap from="cloud" to="/camera/cloud"/>
+  </node>
+  
+  <node pkg="rtabmap_util" exec="obstacles_detection" name="obstacles_detection" output="screen">
+    <param name="frame_id" value="base_footprint"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    
+    <remap from="cloud" to="/camera/cloud"/>
+    <remap from="obstacles" to="/camera/obstacles"/>
+    <remap from="ground" to="/camera/ground"/>
+  </node>
+  
+</launch>
