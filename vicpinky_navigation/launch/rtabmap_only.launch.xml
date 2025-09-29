@@ -29,8 +29,9 @@
     <remap from="rgb/image" to="/camera/image_raw"/>
     <remap from="rgb/camera_info" to="/camera/camera_info"/>
     <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="depth/camera_info" to="/camera/camera_info"/>  
     <remap from="odom" to="/odom"/>
-    
+      
     <!-- Delete database on start -->
     <param name="delete_db_on_start" value="true"/>
     <param name="Grid/Published" value="true" type="str"/>
@@ -99,5 +100,18 @@
     <remap from="obstacles" to="/camera/obstacles"/>
     <remap from="ground" to="/camera/ground"/>
   </node>
+  
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_base_footprint"
+        args="0.0 0.0 0.0 0.0 0.0 0.0 base_footprint base_link"/>
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_base_link"
+        args="0.0 0.0 0.0 0.0 0.0 0.0 base_link camera_link"/>
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_optical_frame"
+        args="0.0 0.0 0.0 0.0 0.0 0.0 camera_link camera_rgb_optical_frame"/>
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="gazebo_camera_frame"
+        args="0.0 0.0 0.0 0.0 0.0 0.0 camera_rgb_optical_frame pinky/base_footprint/camera"/>
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="gazebo_camera_frame"
+        args="0.0 0.0 0.0 0.0 0.0 0.0 camera_rgb_optical_frame pinky/base_footprint/camera"/>
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="gazebo_imu_frame"
+      args="0.0 0.0 0.0 0.0 0.0 0.0 imu_link pinky/base_footprint/imu"/>
   
 </launch>
