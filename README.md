@@ -149,19 +149,27 @@
    ```
 
 ---
-### 맵변경시 
+### Gazebo 맵 변경 하고싶을 때 
+   ```bash
 cd vic_pinky_VSLAM/src/vicpinky_gazebo/launch/launch_sim.launch.xml
 code .
-'''
-<arg name="world_name" default="factory_L1.world"/>
-해당 부분을 (addinedu_map.world, factory_L1.world,empty.world ) 중 하나로 변경 하고 
+   
+   ```
 
+
+   ```bash
+<arg name="world_name" default="factory_L1.world"/>
+해당 부분을 (addinedu_map.world, factory_L1.world,empty.world ) 중 하나로 변경
+   
+   ```
 터미널에서
+
+   ```bash
 colcon build
 source ./install/setup.bash
-'''
-
-
+   
+   ```
+---
 
 ###  맵 저장 
 db에 자동저장
