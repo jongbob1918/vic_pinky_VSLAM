@@ -16,61 +16,76 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
 1. **환경**: Ubuntu 24.04, ROS2 Jazzy
 2. **패키지 클론**:
    ```bash
-   mkdir -p ~/dev_ws/
+   mkdir -p ~/dev_ws
    cd ~/dev_ws
-   git clone https://github.com/pinklab-art/pinky_violet.git
+   git clone git@github.com:jongbob1918/vic_pinky_VSLAM.git
    ```
 3. **의존성 설치**:
    ```bash
-   cd ~/vicpinky_ws
+   cd vicpinky_VSLAM
    rosdep install --from-paths src --ignore-src -r -y
    ```
 4. **빌드**:
    ```bash
-   cd ~/vicpinky_ws/src
+   cd vicpinky_VSLAM
    colcon build
+   source ./istall/setup.bash
    ```
 
-### 로봇 설정
-1. **패키지 클론**:
-   ```bash
-   mkdir -p ~/vicpinky_ws/src
-   cd ~/vicpinky_ws/src
-   git clone https://github.com/pinklab-art/vic_pinky.git
-   ```
-2. **Gazebo 패키지 삭제**:
-   ```bash
-   cd vic_pinky
-   sudo rm -r vicpinky_gazebo/
-   ```
-3. **udev 설정**:
-   ```bash
-   cd ~/vicpinky_ws/src/vic_pinky/doc
-   sudo cp ./99-vic-pinky.rules /etc/udev/rules.d/
-   sudo udevadm control --reload-rules
-   sudo udevadm trigger
-   ```
-4. **빌드 및 환경 설정**:
-   ```bash
-   colcon build
-   echo 'source ~/vicpinky_ws/install/setup.bash' >> ~/.bashrc
-   source ~/.bashrc
-   ```
 
----
-
-## 3. 사용 방법
+## 2. 사용 방법
 
 ### SLAM 실행
 1. **로봇 실행**:
    ```bash
-   ros2 launch vicpinky_bringup bringup.launch.xml
+   ros2 launch vicpinky_bringup bringup.launch.xml use_sim_time:=True
    ```
 2. **SLAM 실행**:
+다른 터미널 열기
    ```bash
-   ros2 launch vicpinky_navigation map_building.launch.xml
+   source ./istall/setup.bash
+   ros2 launch vicpinky_navigation rtabmap_only.launch.xml
    ```
-3. **지도 저장**:
+   
+3. **rviz  실행**:
+다른 터미널 열기
+   ```bash
+   source ./istall/setup.bash
+   rviz2
+   ```
+
+4. **키보드 조작 실행**:
+다른 터미널 열기
+   ```bash
+   source ./istall/setup.bash
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+   
+   ```
+
+### 키보드 조작 안내 표
+
+| 키 | 동작 |
+|----|------|
+| `u` | 좌측 상단 이동 |
+| `i` | 전진 |
+| `o` | 우측 상단 이동 |
+| `j` | 좌측 이동 |
+| `k` | 정지 |
+| `l` | 우측 이동 |
+| `m` | 좌측 하단 이동 |
+| `,` | 후진 |
+| `.` | 우측 하단 이동 |
+| `t` | 위로 이동 (+z) |
+| `b` | 아래로 이동 (-z) |
+| `q`/`z` | 최대 속도 증가/감소 (10%) |
+| `w`/`x` | 직진 속도만 증가/감소 (10%) |
+| `e`/`c` | 회전 속도만 증가/감소 (10%) |
+
+**Holonomic 모드 (스트레이프 이동)**: Shift 키를 누른 상태에서 위의 키를 사용하세요.
+
+   
+5. **지도 저장**:
+다른 터미널 열기
    ```bash
    ros2 run nav2_map_server map_saver_cli -f <map_name>
    ```
@@ -92,7 +107,7 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
    ```
 2. **SLAM 실행 (시뮬레이션)**:
    ```bash
-   ros2 launch vicpinky_navigation map_building.launch.xml use_sim_time:=true
+    ros2 launch vicpinky_navigation rtabmap_only.launch.xml
    ```
 3. **Navigation 실행 (시뮬레이션)**:
    ```bash
@@ -101,12 +116,3 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
 
 ---
 
-## 5. 이미지
-
-- 아래에 필요한 이미지를 삽입하세요:
-  - Gazebo 실행 화면: `<이미지 경로>`
-  - RViz Depth 카메라 화면: `<이미지 경로>`
-
----
-
-이 문서는 간단한 가이드로, 자세한 내용은 각 패키지의 문서를 참고하세요.

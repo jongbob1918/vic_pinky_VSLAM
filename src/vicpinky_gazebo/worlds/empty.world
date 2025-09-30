@@ -34,12 +34,6 @@
         https://fuel.gazebosim.org/1.0/OpenRobotics/models/Sun
       </uri>
     </include>
-
-    <include>
-      <uri>model://cyberzoo</uri>
-      <pose>0 0 0 0 0 0.454</pose>
-    </include>
-
     <scene>
       <shadows>false</shadows>
     </scene>
