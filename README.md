@@ -97,6 +97,18 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
    ```
 
 ---
+### 맵변경시 
+cd vic_pinky_VSLAM/src/vicpinky_gazebo/launch/launch_sim.launch.xml
+code .
+'''
+<arg name="world_name" default="factory_L1.world"/>
+해당 부분을 (addinedu_map.world, factory_L1.world,empty.world ) 중 하나로 변경 하고 
+
+터미널에서
+colcon build
+source ./install/setup.bash
+'''
+
 
 ## 4. 시뮬레이션
 
