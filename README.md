@@ -1,6 +1,10 @@
 # Vic Pinky VSLAM
+### Pinklab에서 만든 Vic Pinky를 활용하여 Depth 카메라와 RTAB-Map SLAM을 구현한 프로젝트입니다. 
 
-Pinklab에서 만든 Vic Pinky를 활용하여 Depth 카메라와 RTAB-Map SLAM을 구현한 프로젝트입니다. 
+<img src="./doc/rtabmap_test.gif" width="픽셀_값" height="픽셀_값">
+
+
+
 
 ---
 
@@ -180,3 +184,7 @@ ros2 run nav2_map_server map_saver_cli -f ~/my_map
    ```bash
    ros2 launch vicpinky_navigation bringup_launch.xml map:=<map_name>
    ```
+
+
+### 문의 사항 
+#### 📧  mail : jongbob1918@gmail.com
