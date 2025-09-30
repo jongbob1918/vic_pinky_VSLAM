@@ -1,7 +1,7 @@
 ### ekf config file ###
 ekf_filter_node:
     ros__parameters:
-        frequency: 30.0                 # 예측과 센서 데이터를 통한 보정(수정)을 포함한 전체 필터링 사이클이 얼마나 자주 실행될지를 결정
+        frequency: 20.0                 # 예측과 센서 데이터를 통한 보정(수정)을 포함한 전체 필터링 사이클이 얼마나 자주 실행될지를 결정
         two_d_mode: true                # 2D 모드 활성화 (로봇이 주로 평면에서 움직이는 경우)
         publish_acceleration: false     # 가속도 데이터를 퍼블리시할지 여부(시스템 부하를 낮추기 위해 보통 false로 설정)
         publish_tf: true                # TF 변환을 퍼블리시할지 여부   

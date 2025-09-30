@@ -8,7 +8,7 @@
             <always_on>true</always_on>
             <visualize>true</visualize>
             <pose> 0 0 0 0 0 0 </pose>
-            <update_rate>5</update_rate>
+            <update_rate>20</update_rate>
             <topic>${prefix}scan</topic>
             <gz_frame_id>${prefix}laser_link</gz_frame_id>
             <lidar>
