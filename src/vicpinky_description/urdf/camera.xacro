@@ -23,7 +23,7 @@
             <far>8.0</far>
           </clip>
         </depth_camera>
-        <optical_frame_id>${prefix}camera_depth_frame</optical_frame_id>
+        <optical_frame_id>${prefix}camera_depth_optical_frame</optical_frame_id>
       </camera>
       <always_on>1</always_on>
       <update_rate>20</update_rate>

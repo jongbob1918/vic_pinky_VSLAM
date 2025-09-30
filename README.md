@@ -1,12 +1,46 @@
 # Vic Pinky VSLAM
 
-Vic Pinky를 활용하여 Depth 카메라와 RTAB-Map SLAM을 구현한 프로젝트입니다. 이 문서는 설치, 실행 방법, 그리고 시뮬레이션에 대한 간단한 가이드를 제공합니다.
+Pinklab에서 만든 Vic Pinky를 활용하여 Depth 카메라와 RTAB-Map SLAM을 구현한 프로젝트입니다. 
 
 ---
 
-## 1. 프로젝트 소개
+## 1. 프로젝트 목표
 
-Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 Depth 카메라를 추가하고 RTAB-Map SLAM을 활용하여 실시간 지도 작성 및 자율 주행을 구현합니다.
+이번 프로젝트에서는 Gazebo에서 Depth 카메라를 추가하고 RTAB-Map SLAM을 활용하여 실시간 지도 작성 및 자율 주행을 구현
+
+
+## 2. 프로젝트 과정
+
+### 1. Depth 카메라 urdf 추가
+1. orbbec astra 카메라 가제보모델을 gazebo.fuel에서 다운
+2. camera.xacro 및 robot_core.xacro에 링크 및 설정 추가
+3. vicpinky_gazebo/params/pinky_bridge.yaml depth카메라 토픽 추가
+
+### 2. RTAB-Map SLAM 구현
+1. sudo apt install ros-$ROS_DISTRO-rtabmap-ros 설치
+2. vicpinky_navigation/launch/rtabmap_rgbd.launch.xml 파일 추가 
+3. 공식 예제를 참고하여 rtabmap_rgbd.launch.xml파일작성
+[공식 깃허브](https://github.com/introlab/rtabmap_ros)
+
+
+### 3. 문제점
+
+1. depth 단일로만 rtamp_slam을 실행시 맵이 꼬이는 현상이 발생 
+2. 단순한 맵에서 시각적특징 추출의 어려움으로 오차가 누적되어 맵이 이상해지는걸로 예상
+
+<img src="./doc/depth_only_rtabmap_image.png" width="픽셀_값" height="픽셀_값">
+
+
+---
+
+### 4. 개선 방법
+
+
+1. depth와 2d lidar의 센서 데이터를 융합하는 방식으로 변경
+2. vicpinky_navigation/launch/rtabmap_rgbd_lidar.launch.xml 파일 추가 
+3. 정확도가 월등히 좋아짐.
+
+<img src="./doc/depth_lidar_rtabmap_image.png" width="픽셀_값" height="픽셀_값">
 
 ---
 
@@ -35,7 +69,7 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
 
 ## 2. 사용 방법
 
-### SLAM 실행
+### Depth 카메라 RTAB-Map SLAM 실행
 1. **로봇 실행**:
    ```bash
    ros2 launch vicpinky_bringup bringup.launch.xml use_sim_time:=True
@@ -44,17 +78,10 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
 다른 터미널 열기
    ```bash
    source ./istall/setup.bash
-   ros2 launch vicpinky_navigation rtabmap_only.launch.xml
+   ros2 launch vicpinky_navigation rtabmap_rgbd.launch.xml
    ```
    
-3. **rviz  실행**:
-다른 터미널 열기
-   ```bash
-   source ./istall/setup.bash
-   rviz2
-   ```
-
-4. **키보드 조작 실행**:
+3. **키보드 조작 실행**:
 다른 터미널 열기
    ```bash
    source ./istall/setup.bash
@@ -90,10 +117,27 @@ Vic Pinky는 ROS2 기반의 로봇 플랫폼으로, 본 프로젝트에서는 De
    ros2 run nav2_map_server map_saver_cli -f <map_name>
    ```
 
-### Navigation 실행
-1. **Navigation2 실행**:
+
+
+### Depth 카메라, 2D-LIDAR 기반 RTAB-Map SLAM 실행
+
+1. **로봇 실행**:
    ```bash
-   ros2 launch vicpinky_navigation bringup_launch.xml map:=<map_name>
+   ros2 launch vicpinky_bringup bringup.launch.xml use_sim_time:=True
+   ```
+2. **SLAM 실행**:
+다른 터미널 열기
+   ```bash
+   source ./istall/setup.bash
+   ros2 launch vicpinky_navigation rtabmap_rgbd_lidar.launch.xml
+   ```
+   
+3. **키보드 조작 실행**:
+다른 터미널 열기
+   ```bash
+   source ./istall/setup.bash
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+   
    ```
 
 ---
@@ -110,21 +154,29 @@ source ./install/setup.bash
 '''
 
 
-## 4. 시뮬레이션
 
-### Gazebo 실행
-1. **Gazebo 실행 및 로봇 스폰**:
-   ```bash
-   ros2 launch vicpinky_bringup gazebo_bringup.launch.xml
-   ```
-2. **SLAM 실행 (시뮬레이션)**:
-   ```bash
-    ros2 launch vicpinky_navigation rtabmap_only.launch.xml
-   ```
-3. **Navigation 실행 (시뮬레이션)**:
-   ```bash
-   ros2 launch vicpinky_navigation bringup_launch.xml map:=<map_name> use_sim_time:=true
+###  맵 저장 
+db에 자동저장
+db에서 열기
+
+ ```bash
+   # 데이터베이스 확인
+ls -lh ~/.ros/rtabmap.db
+
+# 데이터베이스 뷰어로 열기
+rtabmap-databaseViewer ~/.ros/rtabmap.db
    ```
 
----
+### 2D Occupancy Grid 저장 
+RTABMAP이 발행하는 /map 토픽을 pgm/yaml 형식으로 저장
+ ```bash
+# RTABMAP 실행 중에
+ros2 run nav2_map_server map_saver_cli -f ~/my_map
+   ```
 
+
+### Navigation 실행
+1. **Navigation2 실행**:
+   ```bash
+   ros2 launch vicpinky_navigation bringup_launch.xml map:=<map_name>
+   ```

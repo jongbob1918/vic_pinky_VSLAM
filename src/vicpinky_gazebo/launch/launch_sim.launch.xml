@@ -3,6 +3,9 @@
 <launch>
     <arg name="robot_name" default="pinky"/>
     <arg name="world_name" default="factory_L1.world"/>
+    <!--arg name="world_name" default="factory_L1.world"/-->
+    <!--arg name="world_name" default="empty.world"/-->
+    <!--arg name="world_name" default="addinedu_map.world"/-->
     <arg name="world" default="$(find-pkg-share vicpinky_gazebo)/worlds/$(var world_name)"/>
     <arg name="bridge_params" default="$(find-pkg-share vicpinky_gazebo)/params/pinky_bridge.yaml"/>
     
@@ -20,8 +23,8 @@
     <include file="$(find-pkg-share vicpinky_description)/launch/upload.launch.xml">
         <arg name='use_sim_time' value='True'/>
     </include>
-
-    <node pkg="ros_gz_sim" exec="create" name='create' output='screen' args="-name $(var robot_name) -topic robot_description -x 4.0 -y 5.0 -z 0.3">
+    <!-- addinedu_map: { -x 4.0 -y 5.0 -z 0.3 }, factory_L1.world: { -x 14.0 -y -16.0 -z 0.3 }-->
+    <node pkg="ros_gz_sim" exec="create" name='create' output='screen' args="-name $(var robot_name) -topic robot_description -x 14.0 -y -16.0 -z 0.3">
         <param name='use_sim_time' value='True'/>
     </node>
 
