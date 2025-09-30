@@ -20,6 +20,10 @@
 2. camera.xacro 및 robot_core.xacro에 링크 및 설정 추가
 3. vicpinky_gazebo/params/pinky_bridge.yaml depth카메라 토픽 추가
 
+<img src="./doc/gazebo_image.png" width="픽셀_값" height="픽셀_값">
+
+---
+
 ### 2. RTAB-Map SLAM 구현
 1. sudo apt install ros-$ROS_DISTRO-rtabmap-ros 설치
 2. vicpinky_navigation/launch/rtabmap_rgbd.launch.xml 파일 추가 
