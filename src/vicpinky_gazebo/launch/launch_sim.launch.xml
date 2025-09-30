@@ -2,7 +2,7 @@
 
 <launch>
     <arg name="robot_name" default="pinky"/>
-    <arg name="world_name" default="addinedu_map.world"/>
+    <arg name="world_name" default="factory_L1.world"/>
     <arg name="world" default="$(find-pkg-share vicpinky_gazebo)/worlds/$(var world_name)"/>
     <arg name="bridge_params" default="$(find-pkg-share vicpinky_gazebo)/params/pinky_bridge.yaml"/>
     
