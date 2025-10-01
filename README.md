@@ -28,6 +28,7 @@
 1. sudo apt install ros-$ROS_DISTRO-rtabmap-ros 설치
 2. vicpinky_navigation/launch/rtabmap_rgbd.launch.xml 파일 추가 
 3. 공식 예제를 참고하여 rtabmap_rgbd.launch.xml파일작성
+
 [공식 깃허브](https://github.com/introlab/rtabmap_ros)
 
 
@@ -60,7 +61,7 @@
    ```bash
    mkdir -p ~/dev_ws
    cd ~/dev_ws
-   git clone git@github.com:jongbob1918/vic_pinky_VSLAM.git
+   git clone https://github.com/jongbob1918/vic_pinky_VSLAM.git
    ```
 3. **의존성 설치**:
    ```bash
@@ -71,7 +72,7 @@
    ```bash
    cd vicpinky_VSLAM
    colcon build
-   source ./istall/setup.bash
+   source ./install/setup.bash
    ```
 
 
@@ -80,19 +81,19 @@
 ### Depth 카메라 RTAB-Map SLAM 실행
 1. **로봇 실행**:
    ```bash
-   ros2 launch vicpinky_bringup bringup.launch.xml use_sim_time:=True
+   ros2 launch vicpinky_bringup gazebo_bringupe.launch.xml use_sim_time:=True
    ```
 2. **SLAM 실행**:
 다른 터미널 열기
    ```bash
-   source ./istall/setup.bash
+   source ./install/setup.bash
    ros2 launch vicpinky_navigation rtabmap_rgbd.launch.xml
    ```
    
 3. **키보드 조작 실행**:
 다른 터미널 열기
    ```bash
-   source ./istall/setup.bash
+   source ./install/setup.bash
    ros2 run teleop_twist_keyboard teleop_twist_keyboard 
    
    ```
@@ -131,45 +132,37 @@
 
 1. **로봇 실행**:
    ```bash
-   ros2 launch vicpinky_bringup bringup.launch.xml use_sim_time:=True
+      ros2 launch vicpinky_bringup gazebo_bringup.launch.xml use_sim_time:=True
    ```
 2. **SLAM 실행**:
 다른 터미널 열기
    ```bash
-   source ./istall/setup.bash
+   source ./install/setup.bash
    ros2 launch vicpinky_navigation rtabmap_rgbd_lidar.launch.xml
    ```
    
 3. **키보드 조작 실행**:
 다른 터미널 열기
    ```bash
-   source ./istall/setup.bash
+   source ./install/setup.bash
    ros2 run teleop_twist_keyboard teleop_twist_keyboard 
    
    ```
 
 ---
-### Gazebo 맵 변경 하고싶을 때 
-   ```bash
+### 맵변경시 
 cd vic_pinky_VSLAM/src/vicpinky_gazebo/launch/launch_sim.launch.xml
 code .
-   
-   ```
-
-
-   ```bash
+'''
 <arg name="world_name" default="factory_L1.world"/>
-해당 부분을 (addinedu_map.world, factory_L1.world,empty.world ) 중 하나로 변경
-   
-   ```
-터미널에서
+해당 부분을 (addinedu_map.world, factory_L1.world,empty.world ) 중 하나로 변경 하고 
 
-   ```bash
+터미널에서
 colcon build
 source ./install/setup.bash
-   
-   ```
----
+'''
+
+
 
 ###  맵 저장 
 db에 자동저장
